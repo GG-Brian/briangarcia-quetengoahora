@@ -11,19 +11,35 @@
     <?php
 
         function detalles($horarioarray){
-            foreach($horarioarray as $dia => $hora){
-                echo("<h2>----- El día $dia de la semana hay..;</h2>");
-                echo("<table>");
-                foreach($hora as $dato => $valor){
-                    echo("<tr><th><h3>-- A las $dato horas; </h3></th></tr>");
-                    echo("<tr><td>"); 
-                    foreach($valor as $tipo => $info){
-                        echo("<b>$tipo</b> -> <i>$info</i> <br>");
-                    }
-                    echo("<br><br></td></tr>");
+            echo("<br><br> <table> <tr>");
+                    echo("<th><h2>Lunes</h2></th>");
+                    echo("<th><h2>Martes</h2></th>");
+                    echo("<th><h2>Miércoles</h2></th>");
+                    echo("<th><h2>Jueves</h2></th>");
+                    echo("<th><h2>Viernes</h2></th>");
+                echo("</tr>");
+            for ($linea = 8; $linea < 15; $linea++){
+                echo("<tr>");
+                for ($posiciondia = 1; $posiciondia < 6; $posiciondia++){
+                    if    ($linea == 8){ echo("<td>8:00 a 8:55</td>");}
+                    elseif($linea == 9){ echo("<td>8:55 a 9:50</td>");}
+                    elseif($linea == 10){echo("<td>9:50 a 10:45</td>");}
+                    elseif($linea == 11){echo("<td>10:45 a 11:15</td>");}
+                    elseif($linea == 12){echo("<td>11:15 a 12:10</td>");}
+                    elseif($linea == 13){echo("<td>8:00 a 13:05</td>");}
+                    else                {echo("<td>13:05 a 14:00</td>");}
                 }
-                echo("</table><br><br><br>");
+                echo("</tr><tr>");
+                for ($posiciondia = 1; $posiciondia < 6; $posiciondia++){
+                    echo("<td>");
+                    foreach ($horarioarray[$posiciondia][$linea] as $claseinfo => $clasedato){
+                        echo("$claseinfo -> $clasedato<br>");
+                    }
+                    echo("<br></td>");
+                }
+                echo("</tr>");
             }
+            echo("</table><br><br><br>");
         }
         
 
@@ -84,44 +100,44 @@
         
                     
                   #dia    #hora
-        $horario = [1 => [  8 => [ "materia" => "EMR", "docente" => "MarGac", "taller" => "G201", "Finaliza minuto" => 55],
-                            9 => [ "materia" => "DSW", "docente" => "SerRam", "taller" => "G201", "Finaliza minuto" => 50],
-                            10 => ["materia" => "DSW", "docente" => "SerRam", "taller" => "G201", "Finaliza minuto" => 45],
-                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio", "Finaliza minuto" => 15],
-                            12 => ["materia" => "PRW", "docente" => "MarRod", "taller" => "G201", "Finaliza minuto" => 10],
-                            13 => ["materia" => "PRW", "docente" => "MarRod", "taller" => "G201", "Finaliza minuto" => 5 ],
-                            14 => ["materia" => "PRW", "docente" => "MarRod", "taller" => "G201", "Finaliza minuto" => 0 ]],
-                    2 => [  8 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201", "Finaliza minuto" => 55],
-                            9 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201", "Finaliza minuto" => 50],
-                            10 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201", "Finaliza minuto" => 45],
-                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio", "Finaliza minuto" => 15],
-                            12 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201", "Finaliza minuto" => 10],
-                            13 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201", "Finaliza minuto" => 5 ],
-                            14 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201", "Finaliza minuto" => 0 ]],
-                    3 => [  8 => [ "materia" => "PRW","docente" => "MarRod","taller" => "G201", "Finaliza minuto" => 55],
-                            9 => [ "materia" => "PRW","docente" => "MarRod","taller" => "G201", "Finaliza minuto" => 50],
-                            10 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201", "Finaliza minuto" => 45],
-                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio", "Finaliza minuto" => 15],
-                            12 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201", "Finaliza minuto" => 10],
-                            13 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201", "Finaliza minuto" => 5 ],
-                            14 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201", "Finaliza minuto" => 0 ]],
-                    4 => [  8 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201", "Finaliza minuto" => 55],
-                            9 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201", "Finaliza minuto" => 50],
-                            10 => ["materia" => "DPL","docente" => "MarRam","taller" => "G201", "Finaliza minuto" => 45],
-                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio", "Finaliza minuto" => 15],
-                            12 => ["materia" => "PRW","docente" => "MarRod","taller" => "G201", "Finaliza minuto" => 10],
-                            13 => ["materia" => "PRW","docente" => "MarRod","taller" => "G201", "Finaliza minuto" => 5 ],
-                            14 => ["materia" => "EMR","docente" => "MarGac","taller" => "G201", "Finaliza minuto" => 0 ]],
-                    5 => [  8 => [ "materia" => "DOR","docente" => "ErmPap","taller" => "G201", "Finaliza minuto" => 55],
-                            9 => [ "materia" => "DOR","docente" => "ErmPap","taller" => "G201", "Finaliza minuto" => 50],
-                            10 => ["materia" => "DPL","docente" => "MarRam","taller" => "G201", "Finaliza minuto" => 45],
-                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio", "Finaliza minuto" => 15],
-                            12 => ["materia" => "EMR","docente" => "MarGac","taller" => "G201", "Finaliza minuto" => 10],
-                            13 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201", "Finaliza minuto" => 5 ],
-                            14 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201", "Finaliza minuto" => 0 ]]
+        $horario = [1 => [  8 => [ "materia" => "EMR", "docente" => "MarGac", "taller" => "G201"],
+                            9 => [ "materia" => "DSW", "docente" => "SerRam", "taller" => "G201"],
+                            10 => ["materia" => "DSW", "docente" => "SerRam", "taller" => "G201"],
+                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio"],
+                            12 => ["materia" => "PRW", "docente" => "MarRod", "taller" => "G201"],
+                            13 => ["materia" => "PRW", "docente" => "MarRod", "taller" => "G201"],
+                            14 => ["materia" => "PRW", "docente" => "MarRod", "taller" => "G201"]],
+                    2 => [  8 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201"],
+                            9 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201"],
+                            10 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"],
+                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio"],
+                            12 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"],
+                            13 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201"],
+                            14 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201"]],
+                    3 => [  8 => [ "materia" => "PRW","docente" => "MarRod","taller" => "G201"],
+                            9 => [ "materia" => "PRW","docente" => "MarRod","taller" => "G201"],
+                            10 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"],
+                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio"],
+                            12 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"],
+                            13 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201"],
+                            14 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201"]],
+                    4 => [  8 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201"],
+                            9 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201"],
+                            10 => ["materia" => "DPL","docente" => "MarRam","taller" => "G201"],
+                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio"],
+                            12 => ["materia" => "PRW","docente" => "MarRod","taller" => "G201"],
+                            13 => ["materia" => "PRW","docente" => "MarRod","taller" => "G201"],
+                            14 => ["materia" => "EMR","docente" => "MarGac","taller" => "G201"]],
+                    5 => [  8 => [ "materia" => "DOR","docente" => "ErmPap","taller" => "G201"],
+                            9 => [ "materia" => "DOR","docente" => "ErmPap","taller" => "G201"],
+                            10 => ["materia" => "DPL","docente" => "MarRam","taller" => "G201"],
+                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio"],
+                            12 => ["materia" => "EMR","docente" => "MarGac","taller" => "G201"],
+                            13 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"],
+                            14 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"]]
                     ];
 
-        ahora($horario, 4, 13, 6);
+        ahora($horario, 3, 10, 48);
         detalles($horario);
     ?>
 </html>
