@@ -1,13 +1,4 @@
 <html>
-    <!--         <table>
-            <tr>
-                <th>Fecha y horas en PHP por Brian García Gómez</th>
-            </tr>
-            <tr>
-                <td><?php echo strftime("%A %e %B %G"); ?></td>
-                <td><?php echo date("h:i:sa"); ?></td>
-            </tr>
-        </table> -->
     <?php
 
         function detalles($horarioarray){
@@ -47,55 +38,74 @@
             # COMPROBACIÓN DE DATOS PASADOS CORRECTOS
             $error = false;
             if (is_string($dia)){ echo("ERR DIA: $dia no es un número de día de la semana correcto."); $error = true;}
-            elseif ($dia < 0 || $dia > 6){ echo("ERR DIA: $dia no es uno de los 5 dias de educación semanal."); $error = true;}
-            
+            elseif ($dia < 1 || $dia > 7){ echo("ERR DIA: $dia no es uno de los 7 dias de la semana (1-7)."); $error = true;}
             if (is_string($horas)){    echo("ERR HORA: $horas no es un valor numérco."); $error = true;}
-            elseif ($horas < 8 || $horas > 13){ echo("No se está partiendo ninguna clase :O");    $error = true;}
-
             if (is_string($minutos)){      echo("ERR MINUTOS: $minutos no es un valor numérico."); $error = true;}
             elseif ($minutos < 0 || $minutos > 59){ echo("ERR MINUTOS: $minutos no es un valor lógicamente correcto."); $error = true;}
 
-            # ACCEDIENTO AL LUGAR DEL ARRAY CORRECTO
-            # El horario calcula como si cada hora durara 1 hora exacta, se requiere esta función para hacer cálculo previo
-            function resultado($horarioarray, $dia, $horas, $minutos){
-                $materia = $horarioarray[$dia][$horas]["materia"];
-                $docente = $horarioarray[$dia][$horas]["docente"];
-                $taller = $horarioarray[$dia][$horas]["taller"];
-                return "Se está impartiendo $materia por $docente en el aula $taller";
-            }
             if (!$error){
-                echo("Hoy es el día $dia, a las $horas:$minutos horas -> ");
-                if ($horas == 13){
-                    if ($minutos > 4){ $horas++; echo(resultado($horarioarray, $dia, $horas, $minutos));}
-                    else {                       echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                if ($horas < 8 || $horas > 13){
+                    $diferenciadias = 0;
+                    $diferenciahoras = 0;
+                    $diferenciaminutos = 60 - $minutos;
+                    if ($horas < 8){ $diferenciahoras = 8 - $horas; $horas = 8;}
+                    else { $diferenciahoras = (24 - $horas) + 8; $dia++; $horas = 8; }
+
+                    if ($minutos == 0){ $diferenciaminutos = 0; }
+                    else { $diferenciahoras--; }
+                    $minutos = 0;
+
+                    if ($dia == 6){ $diferenciadias = 2; $dia = 1; }
+                    elseif ($dia == 7){ $diferenciadias = 1; $dia = 1; }
+                    elseif ($dia == 8){ $dia = 1; }
+                    echo("No se está partiendo ninguna clase :O<br>");
+                    echo("<b>- Para la siguiente clase quedan $diferenciadias días, $diferenciahoras horas y $diferenciaminutos minutos, y pasará lo siguiete...;</b><br>");
+                    echo(resultado($horarioarray, $dia, $horas, $minutos));
                 }
-                if ($horas == 12){
-                    if ($minutos > 9){ $horas++; echo(resultado($horarioarray, $dia, $horas, $minutos));}
-                    else {                       echo(resultado($horarioarray, $dia, $horas, $minutos));}
-                }
-                if ($horas == 11){
-                    if ($minutos > 14){ $horas++; echo(resultado($horarioarray, $dia, $horas, $minutos));}
-                    else {                        echo(resultado($horarioarray, $dia, $horas, $minutos));}
-                }
-                if ($horas == 10){
-                    if ($minutos < 44){ echo(resultado($horarioarray, $dia, $horas, $minutos));}
-                    else {
-                        $horas++;
-                        echo(resultado($horarioarray, $dia, $horas, $minutos));
-                        echo("<br>A las 11:15 horas, esto es lo que pasará;<br>");
-                        $horas++;
-                        echo(resultado($horarioarray, $dia, $horas, $minutos));
+                else {
+                    if ($horas == 13){
+                        if ($minutos > 4){ $horas++; echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                        else {                       echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                    }
+                    if ($horas == 12){
+                        if ($minutos > 9){ $horas++; echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                        else {                       echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                    }
+                    if ($horas == 11){
+                        if ($minutos > 14){ $horas++; echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                        else {                        echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                    }
+                    if ($horas == 10){
+                        if ($minutos < 44){ echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                        else {
+                            $horas++;
+                            echo(resultado($horarioarray, $dia, $horas, $minutos));
+                            echo("<br>A las 11:15 horas, esto es lo que pasará;<br>");
+                            $horas++;
+                            echo(resultado($horarioarray, $dia, $horas, $minutos));
+                        }
+                    }
+                    if ($horas == 9){
+                        if ($minutos > 49){ $horas++; echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                        else {                        echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                    }
+                    if ($horas == 8){
+                        if ($minutos > 54){ $horas++; echo(resultado($horarioarray, $dia, $horas, $minutos));}
+                        else {                        echo(resultado($horarioarray, $dia, $horas, $minutos));}
                     }
                 }
-                if ($horas == 9){
-                    if ($minutos > 49){ $horas++; echo(resultado($horarioarray, $dia, $horas, $minutos));}
-                    else {                        echo(resultado($horarioarray, $dia, $horas, $minutos));}
-                }
-                if ($horas == 8){
-                    if ($minutos > 54){ $horas++; echo(resultado($horarioarray, $dia, $horas, $minutos));}
-                    else {                        echo(resultado($horarioarray, $dia, $horas, $minutos));}
-                }
-           }
+            }
+        }
+            
+        # ACCEDIENTO AL LUGAR DEL ARRAY CORRECTO
+        # El horario se calcula como si cada hora durara 1 hora exacta, se requiere esta función para hacer cálculo previo
+        function resultado($horarioarray, $dia, $horas, $minutos){
+            if ($minutos < 10){ echo("Hoy es el día $dia, a las $horas:0$minutos horas -> ");}
+            else {              echo("Hoy es el día $dia, a las $horas:$minutos horas -> ");}
+            $materia = $horarioarray[$dia][$horas]["materia"];
+            $docente = $horarioarray[$dia][$horas]["docente"];
+            $taller = $horarioarray[$dia][$horas]["taller"];
+            return "Se está impartiendo $materia por $docente en el aula $taller<br><br>";
         }
         
                     
@@ -137,7 +147,10 @@
                             14 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"]]
                     ];
 
-        ahora($horario, 3, 10, 48);
+        ahora($horario, 6, 18, 9);
+        ahora($horario, 7, 2, 57);
+        ahora($horario, 2, 7, 0);
+        ahora($horario, 1, 15, 30);
         detalles($horario);
     ?>
 </html>
