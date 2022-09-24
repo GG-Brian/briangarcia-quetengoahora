@@ -1,6 +1,8 @@
 <html>
     <?php
 
+        $horario = simplexml_load_file("mihorario.xml") or die("Error: Cannot create object");
+
         function detalles($horarioarray){
             echo("<br><br> <table> <tr>");
                     echo("<th><h2>Lunes</h2></th>");
@@ -23,7 +25,7 @@
                 echo("</tr><tr>");
                 for ($posiciondia = 1; $posiciondia < 6; $posiciondia++){
                     echo("<td>");
-                    foreach ($horarioarray[$posiciondia][$linea] as $claseinfo => $clasedato){
+                    foreach ($horarioarray -> dia[$posiciondia - 1] -> hora[$linea - 8] as $claseinfo => $clasedato){
                         echo("$claseinfo -> $clasedato<br>");
                     }
                     echo("<br></td>");
@@ -102,50 +104,11 @@
         function resultado($horarioarray, $dia, $horas, $minutos){
             if ($minutos < 10){ echo("Hoy es el día $dia, a las $horas:0$minutos horas -> ");}
             else {              echo("Hoy es el día $dia, a las $horas:$minutos horas -> ");}
-            $materia = $horarioarray[$dia][$horas]["materia"];
-            $docente = $horarioarray[$dia][$horas]["docente"];
-            $taller = $horarioarray[$dia][$horas]["taller"];
+            $materia = $horarioarray -> dia[$dia-1] -> hora[$horas - 8] -> materia;
+            $docente = $horarioarray -> dia[$dia-1] -> hora[$horas - 8] -> docente;
+            $taller = $horarioarray -> dia[$dia-1] -> hora[$horas - 8] -> taller;
             return "Se está impartiendo $materia por $docente en el aula $taller<br><br>";
         }
-        
-                    
-                  #dia    #hora
-        $horario = [1 => [  8 => [ "materia" => "EMR", "docente" => "MarGac", "taller" => "G201"],
-                            9 => [ "materia" => "DSW", "docente" => "SerRam", "taller" => "G201"],
-                            10 => ["materia" => "DSW", "docente" => "SerRam", "taller" => "G201"],
-                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio"],
-                            12 => ["materia" => "PRW", "docente" => "MarRod", "taller" => "G201"],
-                            13 => ["materia" => "PRW", "docente" => "MarRod", "taller" => "G201"],
-                            14 => ["materia" => "PRW", "docente" => "MarRod", "taller" => "G201"]],
-                    2 => [  8 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201"],
-                            9 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201"],
-                            10 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"],
-                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio"],
-                            12 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"],
-                            13 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201"],
-                            14 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201"]],
-                    3 => [  8 => [ "materia" => "PRW","docente" => "MarRod","taller" => "G201"],
-                            9 => [ "materia" => "PRW","docente" => "MarRod","taller" => "G201"],
-                            10 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"],
-                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio"],
-                            12 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"],
-                            13 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201"],
-                            14 => ["materia" => "DOR","docente" => "ErmPap","taller" => "G201"]],
-                    4 => [  8 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201"],
-                            9 => [ "materia" => "DPL","docente" => "MarRam","taller" => "G201"],
-                            10 => ["materia" => "DPL","docente" => "MarRam","taller" => "G201"],
-                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio"],
-                            12 => ["materia" => "PRW","docente" => "MarRod","taller" => "G201"],
-                            13 => ["materia" => "PRW","docente" => "MarRod","taller" => "G201"],
-                            14 => ["materia" => "EMR","docente" => "MarGac","taller" => "G201"]],
-                    5 => [  8 => [ "materia" => "DOR","docente" => "ErmPap","taller" => "G201"],
-                            9 => [ "materia" => "DOR","docente" => "ErmPap","taller" => "G201"],
-                            10 => ["materia" => "DPL","docente" => "MarRam","taller" => "G201"],
-                            11 => ["materia" => "RECREO", "docente" => "Nadie", "taller" => "Edificio"],
-                            12 => ["materia" => "EMR","docente" => "MarGac","taller" => "G201"],
-                            13 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"],
-                            14 => ["materia" => "DSW","docente" => "SerRam","taller" => "G201"]]
-                    ];
 
         ahora($horario, 6, 18, 9);
         ahora($horario, 7, 2, 57);
